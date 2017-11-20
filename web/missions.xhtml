@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <center> <h1> Name of our game: Warrior </h1> </center>
+        
+    <center>    
+    <h3>Your hero </h3>
+<p:panelGrid columns="2">
+    <f:facet name="header">
+        <p:graphicImage url="images/test.png" height="300px" width="300px"/>
+    </f:facet>
+ 
+    <h:outputText value="Name:" />
+    <h:outputText value="Babu" />
+ 
+    <h:outputText value="Team:" />
+    <h:outputText value="Wormax" />
+ 
+    <h:outputText value="Type:" />
+    <h:outputText value="Warrior" />
+ 
+    <h:outputText value="Level" />
+    <h:outputText value="24" />
+</p:panelGrid>
+    </center>
+    
+    
+    </h:body>
+    
+    
+<script type="text/javascript">
+    function handleDrop(event, ui) {
+        var droppedItem = ui.draggable;
+ 
+        droppedItem.fadeOut('fast');
+    }
+</script>
+ 
+<h:form id="itemForm">
+    <p:fieldset id="availableItemsField" legend="AvailableItems">
+        <p:dataGrid id="availableItems" var="item" value="#{ViewItems.items}" columns="3">
+            <p:panel id="pnl" header="#{item.brand}" style="text-align:center">
+                <h:panelGrid columns="1" style="width:80%">
+                    <p:graphicImage url="images/#{item.brand}.png" height="100px" width="100px" />
+                </h:panelGrid>
+            </p:panel>
+ 
+            <p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+        </p:dataGrid>
+    </p:fieldset>
+ 
+    <p:fieldset id="selectedWeapons" legend="Selected Weapons" style="margin-top:20px">
+        <p:outputPanel id="dropArea">
+            <h:outputText value="Add the weapon to your hero" rendered="#{empty ViewItems.droppedItems}" style="font-size:24px;" />
+            <p:dataTable id="selectedItemsTable" var="item" value="#{ViewItems.droppedItems}" rendered="#{not empty ViewItems.droppedItems}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{item.id}" />
+                </p:column>
+ 
+                <p:column headerText="Year">
+                    <h:outputText value="#{item.year}" />
+                </p:column>
+ 
+                <p:column headerText="Brand">
+                    <h:outputText value="#{item.brand}" />
+                </p:column>
+ 
+                <p:column headerText="Color">
+                    <h:outputText value="#{item.color}" />
+                </p:column>
+                
+                <p:column style="width:32px">
+                    <p:commandButton update=":itemForm:display" oncomplete="PF('itemDialog').show()" icon="ui-icon-search">
+                        <f:setPropertyActionListener value="#{item}" target="#{ViewItems.selectedItem}" />
+                    </p:commandButton>
+                </p:column>
+                
+                <p:column headerText="Delete">
+                    <center> <p:commandButton value="delete item" id="delete" > 
+                        <f:setPropertyActionListener value="#{item}" target="#{ViewItems.deleteItem(selectedItem)}" />
+                    </p:commandButton>
+                    </center>
+                </p:column>
+                
+            </p:dataTable>
+        </p:outputPanel>
+    </p:fieldset>
+ 
+    <!-- for="selectedItems" -->
+    <p:droppable for="selectedWeapons" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableItems" onDrop="handleDrop">
+        <p:ajax listener="#{ViewItems.onItemDrop}" update="dropArea availableItems" />
+    </p:droppable>
+ 
+    <p:dialog header="Item Detail" widgetVar="itemDialog" resizable="false" draggable="false"
+              showEffect="fade" hideEffect="fade" modal="true">
+ 
+        <p:outputPanel id="display">
+            <h:panelGrid columns="2" cellpadding="5" rendered="#{not empty ViewItems.selectedItem}">
+                <f:facet name="header">
+                    <p:graphicImage name="images/#{ViewItems.selectedItem.brand}.gif"/>
+                </f:facet>
+ 
+                <h:outputText value="Id" />
+                <h:outputText value="#{ViewItems.selectedItem.id}" style="font-weight:bold"/>
+ 
+                <h:outputText value="Year:" />
+                <h:outputText value="#{ViewItems.selectedItem.year}" style="font-weight:bold"/>
+ 
+                <h:outputText value="Weapon" />
+                <h:outputText value="#{ViewItems.selectedItem.brand}" style="font-weight:bold"/>
+ 
+                <h:outputText value="Color:" />
+                <h:outputText value="#{ViewItems.selectedItem.color}" style="font-weight:bold"/>
+                
+                <h:outputText value="Delete" />
+                <h:outputText value="#{ViewItems.selectedItem.delete}" style="font-weight: bold" />
+                
+                
+            </h:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+    <p:fieldset legend="Armor" style="margin-top:20px">
+        
+         <!-- RING -->    
+        <p:ring id="basic" value="#{missionsView.missions}" var="missions">
+        <p:outputPanel style="text-align: center;" layout="block">
+            #{missions.id}
+            <br />
+            <p:commandButton update=":itemForm:missionDetail" icon="ui-icon-search" title="View" oncomplete="PF('missionDialog').show();" > 
+<!--                -->
+<f:setPropertyActionListener value="#{missions}" target="#{missionsView.selectedMission}" />
+            </p:commandButton>
+        </p:outputPanel>
+    </p:ring>
+ 
+    <p:dialog header="Mission info" widgetVar="missionDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+        <p:outputPanel id="missionDetail" style="text-align:center;" layout="block">
+            <p:panelGrid columns="2" rendered="#{not empty missionsView.selectedMission}" columnClasses="value">
+                <p:panelGrid  columns="2" rendered="#{not empty missionsView.selectedMission}" columnClasses="value">
+                    <f:facet name="header">
+                        <p:graphicImage url="img/#{missionsView.selectedMission}.png"/>
+                        <c:set var="missionId" value="#{missionsView.selectedMission.id}" />
+                        <c:set var="idUsr" value="#{controlerUser.actId}" />
+                    </f:facet>
+                    <h:outputText value="Difficulté:" />
+                    <h:outputText value="#{missionsView.missionDifficulty(missionId)}"/>
+                    <h:outputText value="Temps" />
+                    <h:outputText value="#{missionsView.missionLenght(missionId)}" />
+                    <p:commandButton value="toto" action="inMission.xhtml">
+                    <f:param name="Launch" value="#{controlerMissions.sendIntoMission(idUsr, missionId)}"/>
+                </p:commandButton>
+                </p:panelGrid>     
+                
+<!--                <p:button value="Launch">
+                    <f:param name="productId" value="10" />
+                </p:button>-->
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+    </p:fieldset>   
+</h:form>
+</html>
+

@@ -8,6 +8,7 @@ package jpa;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 
@@ -31,14 +32,31 @@ public class UserDAO {
         return usr.getId();
     }
     
+    public boolean tryCreateUser(String username, String password){
+        try{
+            usr=(User)em.createNamedQuery("User.findByLogin")
+                .setParameter("login", username)
+                .getSingleResult();    
+        }
+        catch(NoResultException e){
+            User newUsr = new User(0,username,password);
+            em.persist(newUsr);
+            return true;
+        }
+        return false;
+    }
+    
     public boolean tryLogin(String username, String password){
-        usr=(User)em.createNamedQuery("User.findLogins")
-                .setParameter("password",password)
-                .setParameter("login",username)
-                .getSingleResult();
-        if(usr == null)
+        try{
+            usr=(User)em.createNamedQuery("User.findLogins")
+                    .setParameter("password",password)
+                    .setParameter("login",username)
+                    .getSingleResult();
+        }
+        catch(NoResultException e){
             return false;
-        else return true;
+        }
+        return true;
     }
     
 }

@@ -41,9 +41,7 @@ public class MissionsCtrl implements Serializable{
         return dateDisplaying;
     }
     
-//    public int getMissionId(int idUsr){
-//        return dao.getMissionId(idUsr);
-//    }
+
         public Date getMissionId(int idUsr){
         return dao.getMissionId(idUsr);
     }

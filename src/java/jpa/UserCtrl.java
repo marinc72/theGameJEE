@@ -5,6 +5,7 @@
  */
 package jpa;
 
+import static com.sun.faces.facelets.util.Path.context;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -33,6 +34,16 @@ public class UserCtrl implements Serializable{
     private boolean boolLogin;
     private int id=0;
     private int actMissId;
+    private String checkPwd;
+    private boolean boolCreate;
+
+    public String getCheckPwd() {
+        return checkPwd;
+    }
+
+    public void setCheckPwd(String checkPwd) {
+        this.checkPwd = checkPwd;
+    }
 
     
     
@@ -40,18 +51,33 @@ public class UserCtrl implements Serializable{
         return this.id;
     }
     
+    public String createUser(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        if(!this.pwd.equals(this.checkPwd)){
+            context.addMessage(null, new FacesMessage("Please type the same password twice"));
+            return "inscription";
+        }
+        boolCreate = dao.tryCreateUser(this.usrname,this.checkPwd);
+        if(boolCreate){
+            context.addMessage(null, new FacesMessage("User created"));
+            return "homePage";
+        }
+        else{
+            context.addMessage(null, new FacesMessage("Username already taken"));
+            return "inscription";
+        }
+    }
+    
     public String testLogin(){
         boolLogin = dao.tryLogin(this.usrname, this.pwd);
+        FacesContext context = FacesContext.getCurrentInstance();
         if(boolLogin){
             id=dao.getID();
+            context.addMessage(null, new FacesMessage("Successful connection"));
             return "missions";
         }
         else{
-            FacesContext.getCurrentInstance().addMessage(
-                    null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN,
-                    "Authentification invalide",
-                    "Merci de reessayer!!!"));
+            context.addMessage(null, new FacesMessage("Failed login"));
             return "homePage";
         }
     }

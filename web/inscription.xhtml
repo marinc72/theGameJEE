@@ -11,26 +11,28 @@
 
     </h:head>
     <body>
-        <h:form id="logForm">
+        <h:form id="registerForm">
             <p:growl id="msg" showDetail="true" life="3000"/>
-            <p:panel header="Login" style="width: 360px;">
-                <h:panelGrid id="loginPanel" columns="2">
-                    
-                    <h:outputText value="Username"/>
+            <p:panel header="Inscription" style="width: 360px;">
+                <h:panelGrid id="loginPanel" columns="3">                      
+                    <h:outputText value="Username:"/>
                     <p:inputText id="username" value="#{controlerUser.usrname}"/>
                     <p:spacer/>
-                    <p:message for="username"/>
+                    
                     <h:outputText value="Password"/>
                     <p:password id="password" value="#{controlerUser.pwd}" feedback="false"/>
                     <p:spacer/>
-                    <p:message for="password"/>
+                    
+                    <h:outputText value="Type password again"/>
+                    <p:password id="passwordCheck" value="#{controlerUser.checkPwd}" feedback="false"/>
                     <p:spacer/>
-                    <p:commandButton action="#{controlerUser.testLogin()}" update="msg" value="Login"  ajax="false"/>
+                    pwd1:#{controlerUser.pwd} <br/>
+                    pwd2:#{controlerUser.checkPwd}
+                    <p:commandButton action="#{controlerUser.createUser()}" update="msg" value="Create new account"  ajax="false"/>
                 </h:panelGrid>
             </p:panel>
         </h:form>
-        <h:form>
-            <p:commandButton action="inscription" value="Register"  ajax="false"/>
-        </h:form>
-</body>
+            
+        
+    </body>
 </html>

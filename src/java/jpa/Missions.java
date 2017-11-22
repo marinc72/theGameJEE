@@ -79,11 +79,7 @@ public class Missions implements Serializable {
     }
     
     
-    public String displayDateF(Date dateF){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy 'à' HH'h'mm");
-        String dateDisplaying = formatter.format(dateF);
-        return dateDisplaying;
-    }
+
 
     public Integer getId() {
         return id;

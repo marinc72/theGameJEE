@@ -32,6 +32,7 @@ public class UserCtrl implements Serializable{
     private String pwd;
     private boolean boolLogin;
     private int id=0;
+    private int actMissId;
 
     
     

@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -81,8 +82,7 @@
                     <p:commandButton update=":itemForm:display" oncomplete="PF('itemDialog').show()" icon="ui-icon-search">
                         <f:setPropertyActionListener value="#{item}" target="#{ViewItems.selectedItem}" />
                     </p:commandButton>
-                </p:column>
-                
+                </p:column>                
                 <p:column headerText="Delete">
                     <center> <p:commandButton value="delete item" id="delete" > 
                         <f:setPropertyActionListener value="#{item}" target="#{ViewItems.deleteItem(selectedItem)}" />
@@ -136,11 +136,15 @@
             <br />
             <p:commandButton update=":itemForm:missionDetail" icon="ui-icon-search" title="View" oncomplete="PF('missionDialog').show();" > 
 <!--                -->
-<f:setPropertyActionListener value="#{missions}" target="#{missionsView.selectedMission}" />
+                <f:setPropertyActionListener value="#{missions}" target="#{missionsView.selectedMission}" />
+                <c:set var="missionId" value="#{missionsView.selectedMission.id}" />
+                <c:set var="idUsr" value="#{controlerUser.actId}" />
             </p:commandButton>
+            <c:set var="missionId" value="#{missions.id}" />
+            <p:growl id="sendInMission" showDetail="true" />
+            <p:commandButton  action="#{controlerMissions.sendIntoMission(idUsr, missionId)}" update="sendInMission"  value="Launch" ajax="true"/>
         </p:outputPanel>
     </p:ring>
- 
     <p:dialog header="Mission info" widgetVar="missionDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
         <p:outputPanel id="missionDetail" style="text-align:center;" layout="block">
             <p:panelGrid columns="2" rendered="#{not empty missionsView.selectedMission}" columnClasses="value">
@@ -153,17 +157,10 @@
                     <h:outputText value="Difficulté:" />
                     <h:outputText value="#{missionsView.missionDifficulty(missionId)}"/>
                     <h:outputText value="Temps" />
-                    <h:outputText value="#{missionsView.missionLenght(missionId)}" />
-                    <p:commandButton value="toto" action="inMission.xhtml">
-                    <f:param name="Launch" value="#{controlerMissions.sendIntoMission(idUsr, missionId)}"/>
-                </p:commandButton>
+                    <h:outputText value="#{missionsView.missionLenght(missionId)}" />  
                 </p:panelGrid>     
-                
-<!--                <p:button value="Launch">
-                    <f:param name="productId" value="10" />
-                </p:button>-->
             </p:panelGrid>
-        </p:outputPanel>
+        </p:outputPanel> 
     </p:dialog>
     </p:fieldset>   
 </h:form>

@@ -11,12 +11,20 @@
         <script src="js/counter.js" type="text/javascript"/>
 
     </head>
+    <style>
+#myDIV {
+    width: 100%;
+    padding: 50px 0;
+    text-align: center;
+    background-color: lightblue;
+    margin-top: 20px;
+}
+</style>
     <body>
         <c:set var="temps" value="#{controlerMissions.getMissionId(idUsr)}"/>
         <span id="varTest" style="display:none">#{controlerMissions.getTime(temps)}</span>
         <script>
                 var countDownDate = document.getElementById("varTest").innerHTML;
-                console.log(countDownDate);
                 // Update the count down every 1 second
                 var x = setInterval(function() {
                   // Get todays date and time
@@ -32,14 +40,27 @@
                   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                   document.getElementById("demo").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
                     // If the count down is finished, write some text 
-                    if (distance == 0) {
+                    if ((distance * Number.POSITIVE_INFINITY) === Number.NEGATIVE_INFINITY) {
                       clearInterval(x);
+                      console.log("toto");
                       document.getElementById("varTest").innerHTML = "EXPIRED";
+                      myFunction();
                     }
                 }, 1000);
         </script>
         <p id="demo"></p>
+        <button onclick="myFunction()">Try it</button>
+<div id="myDIV" style="display:none">
+This is my DIV element.
+</div>
+
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myDIV");
+    x.style.display = "block";
+}
+</script>
     </body>
 </html>

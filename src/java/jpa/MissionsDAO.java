@@ -40,7 +40,7 @@ public class MissionsDAO {
     }
     
     @Temporal(TemporalType.TIMESTAMP)
-    public void sendMission(int idUsr, int idMission){
+    public boolean sendMission(int idUsr, int idMission){
         FacesContext context = FacesContext.getCurrentInstance();
         miss=(List<Missions>)em.createNamedQuery("Missions.findByIdUser")
                 .setParameter("idUser", idUsr)
@@ -51,11 +51,11 @@ public class MissionsDAO {
                     {
                         
                         java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-                        date.setTime(date.getTime()+((30 * 60) * 1000));
+                        date.setTime(date.getTime()+((1 * 5) * 1000)); //30 * 60
                         Missions mission= new Missions(0,idUsr,date,idMission);
                         em.persist(mission);
-                        context.addMessage(null, new FacesMessage("Successful sent into mission"));
-                        break;
+                        
+                        return true;
                     }
                 case 2:
                     {
@@ -63,8 +63,8 @@ public class MissionsDAO {
                         date.setTime(date.getTime()+((90 * 60) * 1000));
                         Missions mission= new Missions(0,idUsr,date,idMission);
                         em.persist(mission);
-                        context.addMessage(null, new FacesMessage("Successful sent into mission"));
-                        break;
+
+                        return true;
                     }
                 default:
                     {
@@ -72,14 +72,14 @@ public class MissionsDAO {
                         date.setTime(date.getTime()+((240 * 60) * 1000));
                         Missions mission= new Missions(0,idUsr,date,idMission);
                         em.persist(mission);
-                        context.addMessage(null, new FacesMessage("Successful sent into mission"));
-                        break;
+
+                        return true;
                     }
             }
 
         }
         else{
-             context.addMessage(null, new FacesMessage("Wait your mission to finish to send your hero into a new one ..."));
+            return false;
         }
     }
     

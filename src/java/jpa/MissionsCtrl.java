@@ -28,12 +28,21 @@ public class MissionsCtrl implements Serializable{
     @EJB
     private MissionsDAO dao;
     private int id;
+    private boolean testMiss;
     
     
     public String sendIntoMission(int idUsr, int idMission){
-            dao.sendMission(idUsr, idMission);
-            return "inMission";
+            FacesContext context = FacesContext.getCurrentInstance();
+            testMiss = dao.sendMission(idUsr, idMission);
+            if(testMiss){
+                context.addMessage(null, new FacesMessage("Successful sent into mission"));
+                return "inMission";
             }
+            else{
+                context.addMessage(null, new FacesMessage("Wait your mission to finish to send your hero into a new one ..."));
+                return "missions";
+            }
+    }
     
     public String displayDateF(Date dateF){
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy 'à' HH'h'mm");

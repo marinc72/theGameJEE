@@ -71,4 +71,16 @@ public class MissionsView implements Serializable{
                 return "4h";
         }
     }
+        
+        public String missionEXP(int id){
+        switch (id) {
+            case 1:
+                return "30 EXP";
+            case 2:
+                return "120 EXP";
+            default:
+                return "350 EXP";
+        }            
+            
+        }
 }

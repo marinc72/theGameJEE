@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,18 +28,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Personnage.findAll", query = "SELECT p FROM Personnage p")
-    , @NamedQuery(name = "Personnage.findByIdPerso", query = "SELECT p FROM Personnage p WHERE p.idPerso = :idPerso")
+    , @NamedQuery(name = "Personnage.findById", query = "SELECT p FROM Personnage p WHERE p.id = :id")
     , @NamedQuery(name = "Personnage.findByIdUsr", query = "SELECT p FROM Personnage p WHERE p.idUsr = :idUsr")
     , @NamedQuery(name = "Personnage.findByLevel", query = "SELECT p FROM Personnage p WHERE p.level = :level")
     , @NamedQuery(name = "Personnage.findByExperience", query = "SELECT p FROM Personnage p WHERE p.experience = :experience")})
 public class Personnage implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "nomPerso")
+    private String nomPerso;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idPerso")
-    private Integer idPerso;
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "idUsr")
@@ -51,29 +58,28 @@ public class Personnage implements Serializable {
     @NotNull
     @Column(name = "experience")
     private int experience;
-    private PersonnageCtrl ctrl;
+
     public Personnage() {
     }
 
-    public Personnage(Integer idPerso) {
-        this.idPerso = idPerso;
+    public Personnage(Integer id) {
+        this.id = id;
     }
 
-    public Personnage(Integer idPerso, int idUsr, int level, int experience) {
-        this.idPerso = idPerso;
+    public Personnage(Integer id, int idUsr, int level, int experience, String usrName) {
+        this.id = id;
         this.idUsr = idUsr;
         this.level = level;
         this.experience = experience;
+        this.nomPerso = usrName;
     }
 
-
-    
-    public Integer getIdPerso() {
-        return idPerso;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdPerso(Integer idPerso) {
-        this.idPerso = idPerso;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public int getIdUsr() {
@@ -103,7 +109,7 @@ public class Personnage implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idPerso != null ? idPerso.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -114,7 +120,7 @@ public class Personnage implements Serializable {
             return false;
         }
         Personnage other = (Personnage) object;
-        if ((this.idPerso == null && other.idPerso != null) || (this.idPerso != null && !this.idPerso.equals(other.idPerso))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -122,7 +128,15 @@ public class Personnage implements Serializable {
 
     @Override
     public String toString() {
-        return "jpa.Personnage[ idPerso=" + idPerso + " ]";
+        return "jpa.Personnage[ id=" + id + " ]";
+    }
+
+    public String getNomPerso() {
+        return nomPerso;
+    }
+
+    public void setNomPerso(String nomPerso) {
+        this.nomPerso = nomPerso;
     }
     
 }

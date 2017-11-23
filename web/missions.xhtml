@@ -14,7 +14,9 @@
         
     <center>    
     <h3>Your hero </h3>
+    <p:chart type="metergauge" model="#{barxp.meterGaugeModel2}" style="width:400px;height:250px" />
 <p:panelGrid columns="2">
+
     <f:facet name="header">
         <p:graphicImage url="images/test.png" height="300px" width="300px"/>
     </f:facet>
@@ -158,6 +160,8 @@
                     <h:outputText value="#{missionsView.missionDifficulty(missionId)}"/>
                     <h:outputText value="Temps" />
                     <h:outputText value="#{missionsView.missionLenght(missionId)}" />  
+                    <h:outputText value="Experience" />
+                    <h:outputText value="#{missionsView.missionEXP(missionId)}" />  
                 </p:panelGrid>     
             </p:panelGrid>
         </p:outputPanel> 

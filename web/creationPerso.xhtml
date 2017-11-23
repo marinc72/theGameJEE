@@ -20,7 +20,7 @@
                     <c:set var="IDusr" value="#{controlerUser.actId}"/>
                     <p:spacer/>
                     #{controlerUser.actId}
-                    <p:commandButton action="#{controlerPersonnage.createPerso(IDusr)}" update="msg" value="Create new Hero"  ajax="false"/>
+                    <p:commandButton action="#{controlerPersonnage.createPerso(controlerUser.actId)}" update="msg" value="Create new Hero"  ajax="false"/>
                 </h:panelGrid>
             </p:panel>
         </h:form>

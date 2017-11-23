@@ -33,8 +33,8 @@ public class PersonnageDAO {
     EntityManager em;
     
     
-    public void createPerso(int idUsr){
-        Personnage perso = new Personnage(0,idUsr,1,0);
+    public void createPerso(int idUsr, String usrName){
+        Personnage perso = new Personnage(0,idUsr,1,0,usrName);
         em.persist(perso);
     }
 }

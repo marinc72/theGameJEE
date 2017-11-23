@@ -41,4 +41,13 @@ public class PersonnageCtrl implements Serializable{
         context.addMessage(null, new FacesMessage("Well done, here created"));
         return "homePage";
     }
+    
+    public int getPersoID(int idusr){
+        return dao.getPerso(idusr);
+    }
+    
+    public String updatePerso(int idPerso, int exp){
+        dao.updateHero(idPerso, exp);
+        return "missions";
+    }
 }

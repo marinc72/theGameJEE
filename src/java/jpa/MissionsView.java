@@ -64,7 +64,7 @@ public class MissionsView implements Serializable{
         public String missionLenght(int id){
         switch (id) {
             case 1:
-                return "30min";
+                return "3s";
             case 2:
                 return "1h30";
             default:

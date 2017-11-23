@@ -21,6 +21,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
+ * 
+ * UPDATE table_name
+SET column1=value, column2=value2,...
+WHERE some_column=some_value 
  * @author marin
  */
 @Entity
@@ -31,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Personnage.findById", query = "SELECT p FROM Personnage p WHERE p.id = :id")
     , @NamedQuery(name = "Personnage.findByIdUsr", query = "SELECT p FROM Personnage p WHERE p.idUsr = :idUsr")
     , @NamedQuery(name = "Personnage.findByLevel", query = "SELECT p FROM Personnage p WHERE p.level = :level")
+    , @NamedQuery(name = "Personnage.addEXP", query = "UPDATE Personnage p SET p.experience = p.experience + :newEXP WHERE p.id = :idPerso ")
     , @NamedQuery(name = "Personnage.findByExperience", query = "SELECT p FROM Personnage p WHERE p.experience = :experience")})
 public class Personnage implements Serializable {
 

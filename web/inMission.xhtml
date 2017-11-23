@@ -5,12 +5,12 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <head>
+    <h:head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <script src="js/counter.js" type="text/javascript"/>
 
-    </head>
+    </h:head>
     <style>
 #myDIV {
     width: 100%;
@@ -43,7 +43,6 @@
                     // If the count down is finished, write some text 
                     if ((distance * Number.POSITIVE_INFINITY) === Number.NEGATIVE_INFINITY) {
                       clearInterval(x);
-                      console.log("toto");
                       document.getElementById("varTest").innerHTML = "EXPIRED";
                       myFunction();
                     }
@@ -52,7 +51,11 @@
         <p id="demo"></p>
         <button onclick="myFunction()">Try it</button>
 <div id="myDIV" style="display:none">
-This is my DIV element.
+    <h:form>
+    <c:set var="idUser" value="#{controlerUser.actId}"/>
+    <c:set var="idPerso" value="#{controlerPersonnage.getPersoID(idUser)}"/>
+    <p:commandButton value="Go back" ajax="false" action="#{controlerPersonnage.updatePerso(idPerso, 121)}"/>
+    </h:form>
 </div>
 
 

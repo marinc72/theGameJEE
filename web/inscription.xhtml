@@ -26,8 +26,6 @@
                     <h:outputText value="Type password again"/>
                     <p:password id="passwordCheck" value="#{controlerUser.checkPwd}" feedback="false"/>
                     <p:spacer/>
-                    pwd1:#{controlerUser.pwd} <br/>
-                    pwd2:#{controlerUser.checkPwd}
                     <p:commandButton action="#{controlerUser.createUser()}" update="msg" value="Create new account"  ajax="false"/>
                 </h:panelGrid>
             </p:panel>

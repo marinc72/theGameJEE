@@ -28,6 +28,8 @@ public class UserCtrl implements Serializable{
     
     @EJB
     private UserDAO dao;
+    private PersonnageDAO daoPerso;
+    private PersonnageCtrl ctrlPerso;
     private User usr;
     private String usrname;
     private String pwd;
@@ -36,6 +38,8 @@ public class UserCtrl implements Serializable{
     private int actMissId;
     private String checkPwd;
     private boolean boolCreate;
+    private int newPersoId;
+    private Personnage newPerso;
 
     public String getCheckPwd() {
         return checkPwd;
@@ -60,7 +64,9 @@ public class UserCtrl implements Serializable{
         boolCreate = dao.tryCreateUser(this.usrname,this.checkPwd);
         if(boolCreate){
             context.addMessage(null, new FacesMessage("User created"));
-            return "homePage";
+            this.newPersoId = dao.findIdbyLogin(this.usrname).getId();
+            this.id=newPersoId;
+            return "creationPerso";
         }
         else{
             context.addMessage(null, new FacesMessage("Username already taken"));

@@ -23,9 +23,20 @@ public class UserDAO {
     @PersistenceContext(unitName = "GamePU")
     EntityManager em;
     private User usr=null;
+    private int usrID;
+    private User usrPerso;
     
     public List<User> findAll(){
         return em.createNamedQuery("User.findAll").getResultList();
+    }
+    
+
+    
+    public User findIdbyLogin(String login){
+        this.usrPerso= (User)em.createNamedQuery("User.findByLogin")
+                .setParameter("login", login)
+                .getSingleResult();
+        return this.usrPerso;
     }
     
     public int getID(){

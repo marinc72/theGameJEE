@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    </h:head>
+    <body>
+                <h:form id="registerForm">
+            <p:growl id="msg" showDetail="true" life="3000"/>
+            <p:panel header="Creation Personnage" style="width: 360px;">
+                <h:panelGrid id="loginPanel" columns="1">                      
+                    <h:outputText value="Hero Name:"/>
+                    <p:inputText id="username" value="#{controlerPersonnage.usrName}"/>
+                    <c:set var="IDusr" value="#{controlerUser.actId}"/>
+                    <p:spacer/>
+                    #{controlerUser.actId}
+                    <p:commandButton action="#{controlerPersonnage.createPerso(IDusr)}" update="msg" value="Create new Hero"  ajax="false"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </body>
+</html>

@@ -21,7 +21,8 @@
 }
 </style>
     <body>
-        <c:set var="temps" value="#{controlerMissions.getMissionId(idUsr)}"/>
+        <c:set var="idUser" value="#{controlerUser.actId}"/>
+        <c:set var="temps" value="#{controlerMissions.getMissionId(idUser)}"/>
         <span id="varTest" style="display:none">#{controlerMissions.getTime(temps)}</span>
         <script>
                 var countDownDate = document.getElementById("varTest").innerHTML;
@@ -45,19 +46,18 @@
                       clearInterval(x);
                       document.getElementById("varTest").innerHTML = "EXPIRED";
                       myFunction();
+                      return;
                     }
                 }, 1000);
         </script>
         <p id="demo"></p>
-        <button onclick="myFunction()">Try it</button>
 <div id="myDIV" style="display:none">
     <h:form>
-    <c:set var="idUser" value="#{controlerUser.actId}"/>
     <c:set var="idPerso" value="#{controlerPersonnage.getPersoID(idUser)}"/>
     <c:set var="missExp" value="#{controlerMissions.getMissionExperience(idUser)}"/>
     #{controlerPersonnage.updatePerso(idPerso, missExp)}
     #{controlerMissions.deleteMission(idUser)}
-    <p:commandButton value="Go back" ajax="false"/>
+    <p:commandButton value="Go back" ajax="false" action="missions"/>
     </h:form>
 </div>
 

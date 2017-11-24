@@ -14,6 +14,7 @@ import javax.enterprise.inject.New;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,10 +34,15 @@ public class MissionsDAO {
     
     
     public Date getMissionId(int idUsr){
-        missionId = (Missions)(em.createNamedQuery("Missions.findByIdUser")
-                .setParameter("idUser", idUsr)
-                .getSingleResult());
-        return missionId.getTemps();
+        try{            
+            missionId = (Missions)(em.createNamedQuery("Missions.findByIdUser")
+                    .setParameter("idUser", idUsr)
+                    .getSingleResult());
+            return missionId.getTemps();
+        }
+        catch(NoResultException e){
+            return null;
+        }
     }
     
     public int getMissionExp(int idUsr){
@@ -53,8 +59,10 @@ public class MissionsDAO {
     }
     
     public void deleteMiss(int idUsr){
-        em.createNamedQuery("Missions.delete")
-                .setParameter("idUser", idUsr);
+        missionId=(Missions)em.createNamedQuery("Missions.findByIdUser")
+                .setParameter("idUser", idUsr)
+                .getSingleResult();
+        em.remove(missionId);
     }
     
     

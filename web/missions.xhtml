@@ -11,9 +11,11 @@
     </h:head>
     <h:body>
         <center> <h1> Name of our game: Warrior </h1> </center>
-        
     <center>    
     <h3>Your hero </h3>
+    <c:set var="idUsr" value="#{controlerUser.actId}" />
+    <c:set var="exp" value="#{controlerPersonnage.getPersoExp(idUsr)}"/>
+    #{barxp.setExp(exp)}
     <p:chart type="metergauge" model="#{barxp.meterGaugeModel2}" style="width:400px;height:250px" />
 <p:panelGrid columns="2">
 
@@ -166,7 +168,8 @@
             </p:panelGrid>
         </p:outputPanel> 
     </p:dialog>
-    </p:fieldset>   
+    </p:fieldset>  
+
 </h:form>
 </html>
 

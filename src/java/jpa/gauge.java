@@ -24,6 +24,17 @@ import org.primefaces.model.chart.MeterGaugeChartModel;
 @SessionScoped
 public class gauge implements Serializable{
     private MeterGaugeChartModel meterGaugeModel2;
+    private int exp;
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+    
+    
     
     @PostConstruct
     public void init() {
@@ -36,18 +47,23 @@ public class gauge implements Serializable{
     
     private MeterGaugeChartModel initMeterGaugeModel() {
         List<Number> intervals = new ArrayList<Number>(){{
-            add(20);
+            add(25);
             add(50);
-            add(120);
-            add(220);
+            add(75);
+            add(100);
         }};    
-        return new MeterGaugeChartModel(140, intervals);
+        return new MeterGaugeChartModel((this.exp%100), intervals);
+    }
+    
+    private void setExpBar(int exp){
+        meterGaugeModel2.setValue(exp); 
     }
     
     private void createMeterGaugeModels() {
- 
         meterGaugeModel2 = initMeterGaugeModel();
         meterGaugeModel2.setTitle("Experience bar");
+        meterGaugeModel2.setValue(this.exp%100);
+        //meterGaugeModel2.set
         meterGaugeModel2.setSeriesColors("66cc66,93b75f,E7E658,cc6666");
         meterGaugeModel2.setGaugeLabel("experience");
         meterGaugeModel2.setShowTickLabels(false);

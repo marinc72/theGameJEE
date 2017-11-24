@@ -54,7 +54,10 @@
     <h:form>
     <c:set var="idUser" value="#{controlerUser.actId}"/>
     <c:set var="idPerso" value="#{controlerPersonnage.getPersoID(idUser)}"/>
-    <p:commandButton value="Go back" ajax="false" action="#{controlerPersonnage.updatePerso(idPerso, 121)}"/>
+    <c:set var="missExp" value="#{controlerMissions.getMissionExperience(idUser)}"/>
+    #{controlerPersonnage.updatePerso(idPerso, missExp)}
+    #{controlerMissions.deleteMission(idUser)}
+    <p:commandButton value="Go back" ajax="false"/>
     </h:form>
 </div>
 

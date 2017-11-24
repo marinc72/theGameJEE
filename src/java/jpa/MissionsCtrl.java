@@ -59,5 +59,13 @@ public class MissionsCtrl implements Serializable{
             return (long)d.getTime();
         }
 
+    public void deleteMission(int idUsr){
+        dao.deleteMiss(idUsr);
+    } 
+    
+    public int getMissionExperience(int idUsr){
+        return dao.getMissionExp(idUsr);
+    }
+        
 }    
    

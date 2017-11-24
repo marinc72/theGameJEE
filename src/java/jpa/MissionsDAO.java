@@ -39,6 +39,25 @@ public class MissionsDAO {
         return missionId.getTemps();
     }
     
+    public int getMissionExp(int idUsr){
+        missionId = (Missions)em.createNamedQuery("Missions.findByIdUser")
+                .setParameter("idUser", idUsr)
+                .getSingleResult();  
+        if(missionId.getType() == 1){
+            return 30;
+        }
+        else if(missionId.getType() == 2){
+            return 120;
+        }
+        else return 350;
+    }
+    
+    public void deleteMiss(int idUsr){
+        em.createNamedQuery("Missions.delete")
+                .setParameter("idUser", idUsr);
+    }
+    
+    
     @Temporal(TemporalType.TIMESTAMP)
     public boolean sendMission(int idUsr, int idMission){
         FacesContext context = FacesContext.getCurrentInstance();

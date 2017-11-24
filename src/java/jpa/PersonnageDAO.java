@@ -50,6 +50,27 @@ public class PersonnageDAO {
         return persoRenvoi.getId();
     }
     
+    public String getNom(int idUsr){
+        persoRenvoi = (Personnage)em.createNamedQuery("Personnage.findByIdUsr")
+                .setParameter("idUsr", idUsr)
+                .getSingleResult();
+        return persoRenvoi.getNomPerso();
+    }    
+    
+    public int getLevel(int idUsr){
+        persoRenvoi = (Personnage)em.createNamedQuery("Personnage.findByIdUsr")
+                .setParameter("idUsr", idUsr)
+                .getSingleResult();
+        return persoRenvoi.getLevel();
+    } 
+    
+    public int getExp(int idUsr){
+        persoRenvoi = (Personnage)em.createNamedQuery("Personnage.findByIdUsr")
+                .setParameter("idUsr", idUsr)
+                .getSingleResult();
+        return persoRenvoi.getExperience();
+    }     
+    
     public void updateHero(int idPerso,int exp){
         persoUpdate = (Personnage)em.createNamedQuery("Personnage.findById")
                 .setParameter("id", idPerso)

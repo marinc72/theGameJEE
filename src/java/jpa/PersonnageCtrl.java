@@ -46,6 +46,18 @@ public class PersonnageCtrl implements Serializable{
         return dao.getPerso(idusr);
     }
     
+    public String getPersoNom(int idusr){
+        return dao.getNom(idusr);
+    }
+
+    public int getPersoLevel(int idusr){
+        return dao.getLevel(idusr);
+    }    
+    
+    public int getPersoExp(int idusr){
+        return dao.getExp(idusr);
+    }    
+    
     public String updatePerso(int idPerso, int exp){
         dao.updateHero(idPerso, exp);
         return "missions";

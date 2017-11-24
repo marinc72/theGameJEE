@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Missions.findById", query = "SELECT m FROM Missions m WHERE m.id = :id")
     , @NamedQuery(name = "Missions.findByIdUser", query = "SELECT m FROM Missions m WHERE m.idUser = :idUser")
     , @NamedQuery(name = "Missions.findByTemps", query = "SELECT m FROM Missions m WHERE m.temps = :temps")
+    , @NamedQuery(name = "Missions.delete", query = "Delete FROM Missions WHERE m.idUser = :idUser")
     , @NamedQuery(name = "Missions.findByType", query = "SELECT m FROM Missions m WHERE m.type = :type")})
 public class Missions implements Serializable {
 
